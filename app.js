@@ -1,7 +1,7 @@
 var app = angular.module('tn-travel', []);
 
 app.controller('ToursController', function($scope){
-  $scope.title = "Tours"
+  $scope.title = "Tours";
   $scope.tours = [
     {
     title: 'Карибы',
@@ -15,4 +15,13 @@ app.controller('ToursController', function($scope){
     price: '43490'
     }
   ];
+  $scope.newTour = {title: null, country: null, text: null, price: null };
+  $scope.addTour = function(){
+    $scope.tours.push(angular.copy($scope.newTour));
+  };
+  $scope.deleteTour = function(index){
+    $scope.tours.splice(index, 1);
+  };
+  $scope.show_form = false;
+  $scope.show_tour = true;
 });
