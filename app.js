@@ -22,6 +22,6 @@ app.controller('ToursController', function($scope){
   $scope.deleteTour = function(index){
     $scope.tours.splice(index, 1);
   };
-  $scope.show_form = false;
-  $scope.show_tour = true;
+  $scope.showForm = false;
+  $scope.showTour = true;
 });
