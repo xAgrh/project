@@ -1,0 +1,25 @@
+<ng-include src="'templates/static/_menu.html'"></ng-include>
+<select ng-model="selectfilter.country">
+  <option value="">Country</option>
+  <option ng-repeat="country in countries" value="{{ country.title }}">{{ country.title }}</option>
+</select>
+
+
+<div class="container">
+  <div class="row" ng-repeat='tour in tours | filter: {"country": selectfilter.country}' style="margin: 40px 0;">
+    <div class="col-md-2">
+      <img ng-src="images/{{tour.slug}}.png" style="height: 150px;" />
+    </div>
+    <div class="col-md-10">
+      <div class="row">
+        <div class="row">
+          <a ng-href="/#/tour/{{tour.slug}}">{{tour.title}}</a><span ng-show='tour.country'> из {{tour.country}}</span>
+          <span class="pull-right">{{tour.price}}</p>
+        </div>
+        <div class="row">
+          <p>{{tour.text | limitTo : letterLimit}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
