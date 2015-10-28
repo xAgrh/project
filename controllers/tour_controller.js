@@ -1,8 +1,10 @@
-angular.module('tn-travel').controller('TourController', function($scope, $routeParams) {
-  console.log($routeParams.slug);
+angular.module('tn-travel').controller('TourController', function($scope, $routeParams, $resource) {
 
-  angular.forEach(allTours, function(tour) {
-    if ($routeParams.slug == tour.slug)
-      $scope.tour = tour;
-  })
+  var Tour = $resource(
+    'https://api.parse.com/1/classes/Tour/:objectId',
+    {objectId: '@objectId'}
+  )
+
+  $scope.tour = Tour.get({objectId: $routeParams.id});
+
 });
