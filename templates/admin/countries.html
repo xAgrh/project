@@ -1,0 +1,32 @@
+<ng-include src="'templates/static/_menu.html'"></ng-include>
+<h1>Страны</h1>
+<div class='controller'>
+  <form>
+    <div class="form-group">
+      <input class="form-control" type="text" ng-model="newCountry.title" style="width:200px; display:inline;" />
+      <button ng-click='addCountry()' class="btn btn-default" type="submit">Добавить</button>
+    </div>
+  </form>
+
+  <div class="row" ng-repeat='country in countries' ng-model='allCountries' style="margin: 40px 0;">
+    <div class="row" ng-show='showCountry'>
+      {{country.title}}
+      <div class="pull-right">
+        <a ng-click='showCountry = false' href='#'>Редактировать</a>
+        <a href='#' ng-click='deleteCountry($index)'>Удалить</a>
+      </div>
+    </div>
+    <div class="row" ng-hide='showCountry'>
+      <form>
+        <div class="form-group">
+          <input class="form-control" type="text" ng-model="country.title" style="width:200px; display:inline;" />
+        </div>
+        <div class="pull-right">
+          <button ng-click='saveCountry(); showCountry=true' class="btn btn-default" type="submit">Сохранить</button>
+          <button ng-click='deleteCountry($index)' class="btn btn-default" type="submit">Удалить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
