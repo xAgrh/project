@@ -1,0 +1,32 @@
+<ng-include src="'templates/static/_menu.html'"></ng-include>
+<h1>Места</h1>
+<div class='container'>
+  <form>
+    <div class="form-group">
+      <input class="form-control" type="text" ng-model="newPlace.title" style="width:200px; display:inline;" />
+      <button ng-click='addPlace()' class="btn btn-default" type="submit">Добавить</button>
+    </div>
+  </form>
+
+  <div class="row" ng-repeat='place in places' style="margin: 40px 0;">
+    <div class="row" ng-show='showPlace'>
+      {{place.title}}
+      <div class="pull-right">
+        <a ng-click='showPlace = false' href='#'>Редактировать</a>
+        <a href='#' ng-click='deletePlace($index, place)'>Удалить</a>
+      </div>
+    </div>
+    <div class="row" ng-hide='showPlace'>
+      <form>
+        <div class="form-group">
+          <input class="form-control" type="text" ng-model="place.title" style="width:200px; display:inline;" />
+        </div>
+        <div class="pull-right">
+          <button ng-click='savePlace(place); showPlace=true' class="btn btn-default" type="submit">Сохранить</button>
+          <button ng-click='deletePlace($index, place)' class="btn btn-default" type="submit">Удалить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
