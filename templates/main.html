@@ -1,29 +1,13 @@
 <ng-include src="'templates/static/_menu.html'"></ng-include>
-<select ng-model="selectFilter.country">
-  <option value="">Country</option>
-  <option ng-repeat="country in countries" value="{{ country.title }}">{{ country.title }}</option>
-</select>
-<select ng-model="selectFilter.place">
-  <option value="">Place</option>
-  <option ng-repeat="place in places" value="{{ place.title }}">{{ place.title }}</option>
-</select>
-
 
 <div class="container">
-  <div class="row" ng-repeat="tour in tours | filter:{'country': selectFilter.country, 'place': selectFilter.place}" style="margin: 40px 0;">
+  <div class="row">
     <div class="col-md-2">
-      <img ng-src="images/{{tour.slug}}.png" style="height: 150px;" />
+      <img ng-src="images/1.png" style="height: 150px;" />
     </div>
     <div class="col-md-10">
       <div class="row">
-        <div class="row">
-          <span ng-show='tour.country' class="label label-info"> из {{tour.country}}</span>
-          <span ng-show='tour.place' class="label label-danger"> в {{tour.place}}</span>
-          <p class="pull-right">{{tour.price}} за {{tour.duration}} </p>
-        </div>
-        <div class="row">
-          <p>{{tour.text}}</p>
-        </div>
+        
       </div>
     </div>
   </div>
