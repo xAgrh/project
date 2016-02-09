@@ -3,23 +3,21 @@ angular.module('project').controller('MainController', function($scope, $resourc
   $scope.levels = [[],[],[],[],[]];
   // Get table results
   //MITB IS605 spreadsheet loaded as default
-  $scope.spreadsheet = "1LnbUl_4i4iI6ajWIGJM01HrC5ZV-rkJPwhZRTuG7s1Q";
+  //$scope.spreadsheet = "1sw-dA6l-BQaQihjG-KK1yPMHZF4Nb0ApQry8RJdPiIo";
   $scope.get_summary = function(spreadsheet){
   $http({
-      url: 'https://spreadsheets.google.com/feeds/list/'+spreadsheet+'/od6/public/values?alt=json',
-      method: "GET"
+      method: "GET",
+      url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
+      headers: {
+       'Content-Type': undefined
+      },
+      params: { "action": "get", "prodid": "i3333" },
+      paramSerializer: '$httpParamSerializerJQLike'
     })
     .then(function(response) {
         // success
         $scope.summary = response;
-
         console.log("summary found");
-        //load the unknown list with those returned.
-        $scope.levels = [[],[],[],[],[]];
-
-        for (i = 0; i < $scope.summary.data.feed.entry.length; i++) {
-            $scope.levels[0].push($scope.summary.data.feed.entry[i]);
-        }
       },
       function(response) { // optional
           // failed
@@ -27,19 +25,19 @@ angular.module('project').controller('MainController', function($scope, $resourc
       }
     );
   }
-  $scope.get_summary($scope.spreadsheet);
+  $scope.get_summary();
 
 
   // Post new values to table
 
   var req = {
     method: 'POST',
-    url: 'https://script.google.com/macros/s/AKfycby42KmqWfU8p3lkVUjkqK4Lj95SMlCt0LfMd9izi9H-RFotv_A/exec',
+    url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
     headers: {
      'Content-Type': undefined
     },
-    params: { "test": 'test', "ololo": '{ololo}', "same": "GOT IT!!!!" },
-    paramSerializer: '$httpParamSerializerJQLike',
+    params: { "test": "test2", "ololo": "{olol2}", "same": "GOT IT1!!!!" },
+    paramSerializer: '$httpParamSerializerJQLike'
   }
   $scope.post_summary = function(){
     $http(req).then(function(response){
