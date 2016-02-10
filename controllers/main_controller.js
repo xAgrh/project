@@ -1,50 +1,80 @@
 angular.module('project').controller('MainController', function($scope, $resource, $http) {
-
-  $scope.levels = [[],[],[],[],[]];
-  // Get table results
-  //MITB IS605 spreadsheet loaded as default
-  //$scope.spreadsheet = "1sw-dA6l-BQaQihjG-KK1yPMHZF4Nb0ApQry8RJdPiIo";
-  $scope.get_summary = function(spreadsheet){
-  $http({
-      method: "GET",
-      url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
-      headers: {
-       'Content-Type': undefined
-      },
-      params: { "action": "get", "prodid": "i3333" },
-      paramSerializer: '$httpParamSerializerJQLike'
-    })
-    .then(function(response) {
-        // success
-        $scope.summary = response;
-        console.log("summary found");
-      },
-      function(response) { // optional
-          // failed
-        console.log("spreadsheet not found.");
-      }
-    );
+  var product =  {"prodid": "i3334"}
+  // Get row by id
+  var indexProducts = {
+    method: "GET",
+    url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
+    params: { "action": "index" }
   }
-  $scope.get_summary();
 
+  var showProduct = {
+    method: "GET",
+    url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
+    params: { "action": "show", "prodid": "i3334"}
+  }
 
   // Post new values to table
-
-  var req = {
-    method: 'POST',
+  var createProduct = {
+    method: "POST",
     url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
     headers: {
      'Content-Type': undefined
     },
-    params: { "test": "test2", "ololo": "{olol2}", "same": "GOT IT1!!!!" },
+    params: { "action": "create", "test": "test2", "ololo": "{olol2}", "same": "GOT IT1!!!!" },
     paramSerializer: '$httpParamSerializerJQLike'
   }
-  $scope.post_summary = function(){
-    $http(req).then(function(response){
-      $scope.postResult = response;
-    }, function(response){
-      console.log("failed post");
-    });
+
+  var updateProduct = {
+    method: "POST",
+    url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
+    headers: {
+     'Content-Type': undefined
+    },
+    params: { "action": "update", "prodid": "i3334", "test": "test2" },
+    paramSerializer: '$httpParamSerializerJQLike'
   }
-  $scope.post_summary();
+
+  $scope.showProducts = function(){
+    $http(indexProducts).then(function(response) {
+        $scope.showproducts = response;
+        console.log("Product found by get response");
+      }, function(response){
+        console.log("Product not found by get response");
+      });
+  }
+  $scope.showProducts();
+
+  $scope.showProductById = function(){
+    $http(showProduct).then(function(response) {
+        $scope.showproduct = response;
+        console.log("Product found by get response");
+      }, function(response){
+        console.log("Product not found by get response");
+      });
+  }
+  $scope.showProductById();
+
+
+
+  $scope.createProductByParams = function(){
+    $http(createProduct).then(function(response) {
+        $scope.postresult = response;
+        console.log("posted!");
+      }, function(response){
+        console.log("failed post");
+      });
+  }
+  //$scope.createProductByParams();
+
+  $scope.updateProductById = function(){
+    $http(updateProduct).then(function(response) {
+        $scope.updateproduct = response;
+        console.log("posted cell!");
+      }, function(response){
+        console.log("failed post");
+      });
+  }
+  //$scope.updateProductById();
+
+
 });
