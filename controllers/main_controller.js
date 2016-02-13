@@ -1,27 +1,31 @@
 angular.module('project').controller('MainController', function($scope, $resource, $http) {
-  var product =  {"prodid": "i3334"}
-  // Get row by id
-  var indexProducts = {
-    method: "GET",
-    url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
-    params: { "action": "index" }
-  }
 
-  var showProduct = {
-    method: "GET",
-    url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
-    params: { "action": "show", "prodid": "i3334"}
-  }
+  function parseResults(data, headersGetter){
+      //data = angular.fromJson(data);
+      //return data.lines;
+  };
+
+  var Table = $resource(
+    'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec?action=:action',
+    { action: "@index" }
+  )
+  $scope.data = Table.get({action: "index"});
+
+  var Line = $resource(
+    'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec?action=:action',
+    { action: "@index" },
+    { params: {lineid: "@id"}},
+    { post: {}}
+  )
+  $scope.line = Line.get({action: "show", lineid: "1"});
+
+  $scope.createProductByParams = Line.post({action: "create", params: {"test": "test2", "ololo": "{olol2}", "same": "GOT IT1!!!!"}})
 
   // Post new values to table
   var createProduct = {
     method: "POST",
     url: 'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec',
-    headers: {
-     'Content-Type': undefined
-    },
     params: { "action": "create", "test": "test2", "ololo": "{olol2}", "same": "GOT IT1!!!!" },
-    paramSerializer: '$httpParamSerializerJQLike'
   }
 
   var updateProduct = {
@@ -30,31 +34,9 @@ angular.module('project').controller('MainController', function($scope, $resourc
     headers: {
      'Content-Type': undefined
     },
-    params: { "action": "update", "prodid": "i3334", "test": "test2" },
+    params: { "action": "update", "lineid": "i3334", "columnid": "same", "value": "new" },
     paramSerializer: '$httpParamSerializerJQLike'
   }
-
-  $scope.showProducts = function(){
-    $http(indexProducts).then(function(response) {
-        $scope.showproducts = response;
-        console.log("Product found by get response");
-      }, function(response){
-        console.log("Product not found by get response");
-      });
-  }
-  $scope.showProducts();
-
-  $scope.showProductById = function(){
-    $http(showProduct).then(function(response) {
-        $scope.showproduct = response;
-        console.log("Product found by get response");
-      }, function(response){
-        console.log("Product not found by get response");
-      });
-  }
-  $scope.showProductById();
-
-
 
   $scope.createProductByParams = function(){
     $http(createProduct).then(function(response) {
