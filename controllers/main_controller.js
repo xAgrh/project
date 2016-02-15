@@ -7,19 +7,33 @@ angular.module('project').controller('MainController', function($scope, $resourc
 
   var Table = $resource(
     'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec?action=:action',
-    { action: "@index" }
+    { action: "@action" }
   )
   $scope.data = Table.get({action: "index"});
 
   var Line = $resource(
     'https://script.google.com/macros/s/AKfycbxJAdoUOARMbcwKSHkBbTdmDJuKDCZ8N2hvybF1uReLrZ7QDbkI/exec?action=:action',
-    { action: "@index" },
-    { params: {lineid: "@id"}},
-    { post: {}}
-  )
-  $scope.line = Line.get({action: "show", lineid: "1"});
+    { action: '@action' }, //parameters default
+    {
+      get:  { method: "GET", params: { lineid: '@id' } },
+      create: { method: 'POST', params: {  } }
+    });
 
-  $scope.createProductByParams = Line.post({action: "create", params: {"test": "test2", "ololo": "{olol2}", "same": "GOT IT1!!!!"}})
+  $scope.line = Line.get({action: "show", lineid: "2"});
+
+  $scope.newLine = {action: "create", test: null, ololo: null, same: null};
+  $scope.addLine = function(){
+    var lineToServer = new Line($scope.newLine);
+    lineToServer.$save().then(
+      function(line){
+        console.log(line);
+      //  var lineFromServer = angular.extend(line, $scope.newLine);
+      //  $scope.lines.push(lineFromServer);
+      //  $scope.newLine = {}
+      }
+    );
+  }
+  //$scope.createLineByParams = Line.post({action: "create", params: {"test": "test2", "ololo": "{olol2}", "same": "GOT IT1!!!!"}})
 
   // Post new values to table
   var createProduct = {
