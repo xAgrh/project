@@ -1,14 +1,62 @@
 <ng-include src="'templates/static/_menu.html'"></ng-include>
 
+<table st-table="rowCollection" class="table table-striped">
+	<thead>
+	<tr>
+		<th ng-repeat="header in headers track by $index">{{header}}</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat="lines in data">
+
+		<td ng-repeat= "(k, v) in lines">{{v}}</td>
+
+	</tr>
+	<tr>
+<form>
+		<td ng-repeat="header in headers track by $index">
+
+	      <textarea ng-model="newLine[header]"></textarea>
+				<button ng-click="addLine()" type="submit" class="btn btn-default">Create</button>
+
+	  </td>
+</form>
+
+
+
+	</tr>
+	<tr><td ng-repeat="header in headers track by $index">{{categoryForm[subForm].header}}</td>
+	</tr>
+	</tbody>
+</table>
+
+<div class="container">
+  <div class="row">
+    <p>{{newLine}}</p>
+
+    <p>{{line}}</p>
+    <form ng-submit="addLine()">
+      <label>New Post:</label>
+      <textarea ng-model="newLine['@header']"></textarea>
+      <button type="submit" class="btn btn-default">Create</button>
+    </form>
+  </div>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-md-2">
-      <img ng-src="images/1.png" style="height: 150px;" />
+      {{ showproduct }}
     </div>
     <div class="col-md-10">
       <div class="row">
-        
+        {{showproducts}}
       </div>
     </div>
   </div>
+</div>
+
+<p style="background:black;"></p>
+
+<div class="row">
+  {{postcell}}
 </div>
