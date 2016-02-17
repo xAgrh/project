@@ -1,4 +1,4 @@
-angular.module('project', ['ngRoute', 'ngResource'])
+angular.module('project', ['ngRoute', 'ngResource', 'smart-table'])
 .config(function($routeProvider, $locationProvider, $httpProvider){
   $routeProvider
   .when('/', {
